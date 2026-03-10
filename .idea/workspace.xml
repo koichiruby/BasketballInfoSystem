@@ -4,46 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b81749cf-5153-45c9-8cdb-6f9e1a8bcb8b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/BasketballInfoSystem.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bbl/auth_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bbl/matchinfo_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bbl/playerinfo_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bbl/playerperformance_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bbl/teaminfo_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bbl/teamperformance_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/auth_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/match_info_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/player_info_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/player_performance_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/team_info_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/team_performance_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/add_match.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/add_players.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/add_team.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin_dashboard.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/edit_match.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/edit_player.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/edit_team.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/find_match_by_id.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/find_player_by_id.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/find_team_by_id.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/manage_matches.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/manage_players.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/manage_teams.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/match_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/player_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/root.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/team_detail.html" afterDir="false" />
-    </list>
+    <list default="true" id="b81749cf-5153-45c9-8cdb-6f9e1a8bcb8b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,6 +21,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -69,22 +33,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.1.executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.match_info_db.executor&quot;: &quot;Run&quot;,
-    &quot;Python.matchinfo_manager.executor&quot;: &quot;Run&quot;,
-    &quot;Python.pa.executor&quot;: &quot;Run&quot;,
-    &quot;Python.team_info_db.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/pycharmprojects/BasketballInfoSystem&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.1.executor": "Run",
+    "Python.app.executor": "Run",
+    "Python.match_info_db.executor": "Run",
+    "Python.matchinfo_manager.executor": "Run",
+    "Python.pa.executor": "Run",
+    "Python.team_info_db.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/pycharmprojects/eee",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Python.app">
     <configuration name="1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="BasketballInfoSystem" />
