@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛事详情</title>
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .match-details {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .match-details h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .match-details p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .match-details .teams,
+        .match-details .score,
+        .match-details .highlights,
+        .match-details .key-events {
+            margin-top: 20px;
+        }
+
+        .match-details a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .match-details a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-cancel {
+            background-color: #6c757d;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>赛事详情</h1>
+
+    <div class="match-details">
+        <h2>赛事信息</h2>
+
+        <!-- 显示赛事的基本信息 -->
+        <p><strong>MatchID:</strong> {{ match['MatchID'] }}</p>
+        <p><strong>比赛时间:</strong> {{ match['MatchTime'] }}</p>
+        <p><strong>比赛地点:</strong> {{ match['Location'] }}</p>
+
+        <div class="teams">
+            <h3>参赛球队</h3>
+            <p><strong>主队:</strong> {{ match['Teams'][0]['Name'] }} (ID: {{ match['Teams'][0]['TeamID'] }})</p>
+            <p><strong>客队:</strong> {{ match['Teams'][1]['Name'] }} (ID: {{ match['Teams'][1]['TeamID'] }})</p>
+        </div>
+
+        <div class="score">
+            <h3>比赛结果</h3>
+            <p><strong>主队得分:</strong> {{ match['Result']['HomeScore'] }}</p>
+            <p><strong>客队得分:</strong> {{ match['Result']['AwayScore'] }}</p>
+            <p><strong>胜者:</strong> {{ match['Result']['Winner'] }}</p>
+        </div>
+
+        <div class="highlights">
+            <h3>赛事亮点</h3>
+            <p><strong>视频亮点:</strong> <a href="{{ match['Highlights'][0]['URL'] }}" target="_blank">观看视频</a></p>
+            <p><strong>图片亮点:</strong> <a href="{{ match['Highlights'][1]['URL'] }}" target="_blank">查看图片</a></p>
+        </div>
+
+        <div class="key-events">
+            <h3>关键事件</h3>
+            <p><strong>主队犯规:</strong> {{ match['KeyEvents']['Fouls']['HomeTeamFouls'] }}</p>
+            <p><strong>客队犯规:</strong> {{ match['KeyEvents']['Fouls']['AwayTeamFouls'] }}</p>
+            <p><strong>主队封盖:</strong> {{ match['KeyEvents']['Blocks']['HomeTeamBlocks'] }}</p>
+            <p><strong>客队封盖:</strong> {{ match['KeyEvents']['Blocks']['AwayTeamBlocks'] }}</p>
+            <p><strong>主队篮板:</strong> {{ match['KeyEvents']['Rebounds']['HomeTeamRebounds'] }}</p>
+            <p><strong>客队篮板:</strong> {{ match['KeyEvents']['Rebounds']['AwayTeamRebounds'] }}</p>
+            <p><strong>主队抢断:</strong> {{ match['KeyEvents']['Steals']['HomeTeamSteals'] }}</p>
+            <p><strong>客队抢断:</strong> {{ match['KeyEvents']['Steals']['AwayTeamSteals'] }}</p>
+        </div>
+
+        <!-- 提供编辑和删除赛事的按钮 -->
+        <a href="{{ url_for('edit_match', match_id=match['MatchID']) }}" class="btn">修改赛事</a>
+
+        <form action="{{ url_for('delete_match', match_id=match['MatchID']) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-danger">删除赛事</button>
+        </form>
+
+        <!-- 返回赛事管理的按钮 -->
+        <a href="{{ url_for('manage_matches') }}" class="btn btn-cancel">返回赛事管理</a>
+    </div>
+
+</body>
+</html>

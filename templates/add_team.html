@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加新团队</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        // JavaScript 函数动态添加新的输入框
+        function addMemberInput() {
+            var container = document.getElementById("members-container");
+            var memberDiv = document.createElement("div");  // 创建一个新的 div 来包含输入框
+
+            // 创建姓名输入框
+            var memberNameInput = document.createElement("input");
+            memberNameInput.type = "text";
+            memberNameInput.name = "members_name";  // 同一个 name 来接收多个球员姓名
+            memberNameInput.placeholder = "队员姓名";
+            memberDiv.appendChild(memberNameInput);
+
+            // 创建 ID 输入框
+            var memberIdInput = document.createElement("input");
+            memberIdInput.type = "text";
+            memberIdInput.name = "members_id";  // 同一个 name 来接收多个球员ID
+            memberIdInput.placeholder = "队员ID";
+            memberDiv.appendChild(memberIdInput);
+
+            container.appendChild(memberDiv);  // 将新创建的 div 加入到容器中
+        }
+    </script>
+</head>
+<body>
+    <h1>添加新团队</h1>
+
+    <!-- 显示闪现消息 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <label for="TeamID">TeamID:</label>
+        <input type="text" id="TeamID" name="TeamID" required><br><br>
+
+        <label for="TeamName">TeamName:</label>
+        <input type="text" id="TeamName" name="TeamName" required><br><br>
+
+        <label>队员:</label>
+        <div id="members-container">
+            <div>
+                <input type="text" name="members_name" placeholder="队员姓名"><br><br>
+                <input type="text" name="members_id" placeholder="队员ID"><br><br>
+            </div>
+        </div>
+
+        <!-- 添加球员输入框的按钮 -->
+        <button type="button" onclick="addMemberInput()">添加队员</button><br><br>
+
+        <button type="submit">提交</button>
+    </form>
+
+    <a href="{{ url_for('manage_teams') }}">返回首页</a>
+</body>
+</html>
+

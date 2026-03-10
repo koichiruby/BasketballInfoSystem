@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑团队信息</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <h1>编辑团队信息</h1>
+
+    <!-- 显示闪现消息 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- 输入框查询 TeamID -->
+    <form method="POST">
+        <label for="TeamID">输入 TeamID 查询团队:</label>
+        <input type="text" id="TeamID" name="TeamID" value="{{ team_id or '' }}" required><br><br>
+        <button type="submit">查询团队</button>
+    </form>
+
+    {% if team %}
+    <h2>团队信息</h2>
+    <form method="POST">
+        <!-- 团队ID字段，通常不允许修改，readonly -->
+        <label for="TeamID">TeamID:</label>
+        <input type="text" id="TeamID" name="TeamID" value="{{ team['TeamID'] }}" readonly><br><br>
+
+        <label for="TeamName">TeamName:</label>
+        <input type="text" id="TeamName" name="TeamName" value="{{ team['TeamName'] }}" required><br><br>
+
+        <h3>队员信息</h3>
+        <div id="members-container">
+            {% for member in team['members'] %}
+                <div class="member">
+                    <label for="members_name_{{ loop.index }}">队员姓名:</label>
+                    <input type="text" id="members_name_{{ loop.index }}" name="members_name" value="{{ member['Name'] }}" required><br><br>
+
+                    <label for="members_id_{{ loop.index }}">队员ID:</label>
+                    <input type="text" id="members_id_{{ loop.index }}" name="members_id" value="{{ member['PlayerID'] }}" required><br><br>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- 添加新队员输入框 -->
+        <button type="button" onclick="addMemberInput()">添加队员</button><br><br>
+
+        <button type="submit">保存更改</button>
+    </form>
+    {% endif %}
+
+    <a href="{{ url_for('manage_teams') }}">返回首页</a>
+
+    <script>
+        // JavaScript 函数动态添加新的输入框
+        function addMemberInput() {
+            var container = document.getElementById("members-container");
+            var index = container.children.length + 1;
+
+            var memberDiv = document.createElement("div");
+            memberDiv.classList.add("member");
+
+            var memberNameInput = document.createElement("input");
+            memberNameInput.type = "text";
+            memberNameInput.name = "members_name";
+            memberNameInput.placeholder = "队员姓名";
+            memberDiv.appendChild(memberNameInput);
+
+            var memberIdInput = document.createElement("input");
+            memberIdInput.type = "text";
+            memberIdInput.name = "members_id";
+            memberIdInput.placeholder = "队员ID";
+            memberDiv.appendChild(memberIdInput);
+
+            container.appendChild(memberDiv); // 将新创建的成员添加到容器中
+        }
+    </script>
+
+</body>
+</html>

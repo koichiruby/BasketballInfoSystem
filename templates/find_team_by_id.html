@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询球队</title>
+</head>
+<body>
+    <h1>查询球队</h1>
+
+    <!-- 查询球队表单 -->
+    <form method="POST" action="/find_team">
+        <label for="team_id">输入 TeamID 查询球队:</label>
+        <input type="text" id="team_id" name="team_id" required>
+        <button type="submit">查询</button>
+    </form>
+
+    <!-- 错误消息 -->
+    {% if error %}
+    <div style="color: red;">{{ error }}</div>
+    {% endif %}
+
+    <!-- 查询到的球队信息 -->
+    {% if team %}
+    <h2>查询结果:</h2>
+    <p><strong>TeamID:</strong> {{ team['TeamID'] }}</p>
+    <p><strong>TeamName:</strong> {{ team['TeamName'] }}</p>
+    <p><strong>Members:</strong>
+        {% if team['members'] %}
+            <ul>
+                {% for member in team['members'] %}
+                    <li>{{ member['Name'] }} (ID: {{ member['PlayerID'] }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            无队员信息
+        {% endif %}
+    </p>
+    {% endif %}
+
+    <!-- 返回按钮 -->
+    <a href="{{ url_for('manage_teams') }}" class="btn">返回球队列表</a>
+</body>
+</html>

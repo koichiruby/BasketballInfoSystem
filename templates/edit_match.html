@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改赛事</title>
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .btn-cancel {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>修改赛事</h1>
+
+    <form method="POST">
+        <!-- 比赛ID（不可修改） -->
+        <div class="form-section">
+            <label for="MatchID">比赛ID:</label>
+            <input type="text" id="MatchID" name="MatchID" value="{{ match['MatchID'] }}" readonly><br><br>
+        </div>
+
+        <!-- 比赛时间 -->
+        <div class="form-section">
+            <label for="MatchTime">比赛时间:</label>
+            <input type="datetime-local" id="MatchTime" name="MatchTime" value="{{ match['MatchTime'] }}" required><br><br>
+        </div>
+
+        <!-- 比赛地点 -->
+        <div class="form-section">
+            <label for="Location">比赛地点:</label>
+            <input type="text" id="Location" name="Location" value="{{ match['Location'] }}" required><br><br>
+        </div>
+
+        <!-- 第一支球队 -->
+        <div class="form-section">
+            <h3>第一支球队（主队）</h3>
+            <label for="team1_id">TeamID:</label>
+            <input type="text" id="team1_id" name="team1_id" value="{{ match['Teams'][0]['TeamID'] }}" required><br><br>
+
+            <label for="team1_name">TeamName:</label>
+            <input type="text" id="team1_name" name="team1_name" value="{{ match['Teams'][0]['Name'] }}" required><br><br>
+
+            <label for="team1_members">队员（多个队员以逗号分隔）：</label>
+            <input type="text" id="team1_members" name="team1_members" value="{{ match['Teams'][0]['members']|join(', ') }}" required><br><br>
+        </div>
+
+        <!-- 第二支球队 -->
+        <div class="form-section">
+            <h3>第二支球队（客队）</h3>
+            <label for="team2_id">TeamID:</label>
+            <input type="text" id="team2_id" name="team2_id" value="{{ match['Teams'][1]['TeamID'] }}" required><br><br>
+
+            <label for="team2_name">TeamName:</label>
+            <input type="text" id="team2_name" name="team2_name" value="{{ match['Teams'][1]['Name'] }}" required><br><br>
+
+            <label for="team2_members">队员（多个队员以逗号分隔）：</label>
+            <input type="text" id="team2_members" name="team2_members" value="{{ match['Teams'][1]['members']|join(', ') }}" required><br><br>
+        </div>
+
+        <!-- 比分 -->
+        <div class="form-section">
+            <label for="home_score">主队得分:</label>
+            <input type="number" id="home_score" name="home_score" value="{{ match['Result']['HomeScore'] }}" required><br><br>
+
+            <label for="away_score">客队得分:</label>
+            <input type="number" id="away_score" name="away_score" value="{{ match['Result']['AwayScore'] }}" required><br><br>
+        </div>
+
+        <!-- 胜者 -->
+        <div class="form-section">
+            <label for="winner">胜者:</label>
+            <select id="winner" name="winner" required>
+                <option value="Home" {% if match['Result']['Winner'] == 'Home' %}selected{% endif %}>主队</option>
+                <option value="Away" {% if match['Result']['Winner'] == 'Away' %}selected{% endif %}>客队</option>
+            </select><br><br>
+        </div>
+
+        <!-- 亮点 -->
+        <div class="form-section">
+            <label for="highlight_video_url">视频亮点 URL:</label>
+            <input type="url" id="highlight_video_url" name="highlight_video_url" value="{{ match['Highlights'][0]['URL'] }}"><br><br>
+
+            <label for="highlight_image_url">图片亮点 URL:</label>
+            <input type="url" id="highlight_image_url" name="highlight_image_url" value="{{ match['Highlights'][1]['URL'] }}"><br><br>
+        </div>
+
+        <!-- 关键事件 -->
+        <h3>关键事件</h3>
+
+        <div class="form-section">
+            <label for="home_fouls">主队犯规:</label>
+            <input type="number" id="home_fouls" name="home_fouls" value="{{ match['KeyEvents']['Fouls']['HomeTeamFouls'] }}" required><br><br>
+
+            <label for="away_fouls">客队犯规:</label>
+            <input type="number" id="away_fouls" name="away_fouls" value="{{ match['KeyEvents']['Fouls']['AwayTeamFouls'] }}" required><br><br>
+        </div>
+
+        <div class="form-section">
+            <label for="home_blocks">主队封盖:</label>
+            <input type="number" id="home_blocks" name="home_blocks" value="{{ match['KeyEvents']['Blocks']['HomeTeamBlocks'] }}" required><br><br>
+
+            <label for="away_blocks">客队封盖:</label>
+            <input type="number" id="away_blocks" name="away_blocks" value="{{ match['KeyEvents']['Blocks']['AwayTeamBlocks'] }}" required><br><br>
+        </div>
+
+        <div class="form-section">
+            <label for="home_rebounds">主队篮板:</label>
+            <input type="number" id="home_rebounds" name="home_rebounds" value="{{ match['KeyEvents']['Rebounds']['HomeTeamRebounds'] }}" required><br><br>
+
+            <label for="away_rebounds">客队篮板:</label>
+            <input type="number" id="away_rebounds" name="away_rebounds" value="{{ match['KeyEvents']['Rebounds']['AwayTeamRebounds'] }}" required><br><br>
+        </div>
+
+        <div class="form-section">
+            <label for="home_steals">主队抢断:</label>
+            <input type="number" id="home_steals" name="home_steals" value="{{ match['KeyEvents']['Steals']['HomeTeamSteals'] }}" required><br><br>
+
+            <label for="away_steals">客队抢断:</label>
+            <input type="number" id="away_steals" name="away_steals" value="{{ match['KeyEvents']['Steals']['AwayTeamSteals'] }}" required><br><br>
+        </div>
+
+        <!-- 提交按钮 -->
+        <button type="submit">修改赛事</button>
+        <a href="{{ url_for('manage_matches') }}" class="btn-cancel">取消</a>
+    </form>
+
+</body>
+</html>

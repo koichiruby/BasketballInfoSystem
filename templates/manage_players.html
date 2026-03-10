@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球员管理</title>
+    <style>
+        /* 样式化表格和按钮 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .btn {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        /* 添加按钮样式 */
+        .btn-add {
+            padding: 10px 20px;
+            background-color: #28a745;  /* 绿色 */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;  /* 距离表格一定距离 */
+        }
+        .btn-add:hover {
+            background-color: #218838; /* 悬停效果 */
+        }
+    </style>
+</head>
+<body>
+    <h1>球员管理</h1>
+
+    <!-- 添加新球员按钮 -->
+    <a href="{{ url_for('add_player') }}" class="btn-add">添加新球员</a>
+
+    <!-- 查询球员 -->
+    <form method="POST" action="/find_player">
+        <label for="player_id">输入 PlayerID 查询球员:</label>
+        <input type="text" id="player_id" name="player_id" required>
+        <button type="submit">查询球员</button>
+    </form>
+
+    <h2>所有球员</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>PlayerID</th>
+                <th>Name</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td><a href="{{ url_for('player_detail', player_id=player['PlayerID']) }}">{{ player['PlayerID'] }}</a></td>
+                <td>{{ player['Name'] }}</td>
+                <td><a href="{{ url_for('player_detail', player_id=player['PlayerID']) }}" class="btn">查看详情</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary">返回首页</a>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球队详情</title>
+</head>
+<body>
+    <h1>球队详情</h1>
+
+    <p><strong>TeamID:</strong> {{ team['TeamID'] }}</p>
+    <p><strong>TeamName:</strong> {{ team['TeamName'] }}</p>
+
+    <h3>队员信息:</h3>
+    {% if team['members'] %}
+        <ul>
+            {% for member in team['members'] %}
+                <li>{{ member['Name'] }} (ID: {{ member['PlayerID'] }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>无队员信息。</p>
+    {% endif %}
+
+    <!-- 修改和删除按钮 -->
+    <a href="{{ url_for('edit_team', team_id=team['TeamID']) }}" class="btn">修改球队信息</a>
+    <form action="{{ url_for('delete_team', team_id=team['TeamID']) }}" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-danger">删除球队</button>
+    </form>
+
+    <!-- 返回按钮 -->
+    <a href="{{ url_for('manage_teams') }}" class="btn">返回球队列表</a>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员页面</title>
+    <style>
+        /* 简单的样式，调整按钮布局 */
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>欢迎进入管理员页面</h2>
+    <p>你已经成功登录为管理员。</p>
+
+    <!-- 添加三个管理按钮 -->
+    <div>
+          <button class="button" onclick="location.href='http://127.0.0.1:5000/manage_players'">球员信息管理</button>
+          <button class="button" onclick="location.href='http://127.0.0.1:5000/manage_teams'">球队信息管理</button>
+          <button class="button" onclick="location.href='http://127.0.0.1:5000/manage_matches'">比赛信息管理</button>
+    </div>
+
+    <!-- 退出登录按钮 -->
+    <a href="{{ url_for('logout') }}" class="btn">退出登录</a>
+</body>
+</html>

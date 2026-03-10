@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球队管理</title>
+    <style>
+        /* 样式化表格和按钮 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .btn {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        /* 添加按钮样式 */
+        .btn-add {
+            padding: 10px 20px;
+            background-color: #28a745;  /* 绿色 */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;  /* 距离表格一定距离 */
+        }
+        .btn-add:hover {
+            background-color: #218838; /* 悬停效果 */
+        }
+    </style>
+</head>
+<body>
+    <h1>球队管理</h1>
+
+    <!-- 添加新球队按钮 -->
+    <a href="{{ url_for('add_team') }}" class="btn-add">添加新球队</a>
+
+    <!-- 查询球队 -->
+    <h3>根据 TeamID 查询球队</h3>
+    <form method="POST" action="/find_team_by_id">
+        <label for="team_id">输入 TeamID:</label>
+        <input type="text" id="team_id" name="team_id" required>
+        <button type="submit">查询球队</button>
+    </form>
+
+    {% if error %}
+    <div style="color: red;">{{ error }}</div>
+    {% endif %}
+
+    {% if team %}
+    <h2>查询结果:</h2>
+    <p><strong>TeamID:</strong> {{ team['TeamID'] }}</p>
+    <p><strong>TeamName:</strong> {{ team['TeamName'] }}</p>
+    <p><strong>Members:</strong>
+        {% if team['members'] %}
+            <ul>
+                {% for member in team['members'] %}
+                    <li>{{ member['Name'] }} (ID: {{ member['PlayerID'] }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            无队员信息
+        {% endif %}
+    </p>
+    {% endif %}
+
+    <h2>所有球队</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>TeamID</th>
+                <th>TeamName</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if teams %}
+                {% for team in teams %}
+                    <tr>
+                        <td><a href="{{ url_for('team_detail', team_id=team['TeamID']) }}">{{ team['TeamID'] }}</a></td>
+                        <td>{{ team['TeamName'] }}</td>
+                        <td><a href="{{ url_for('team_detail', team_id=team['TeamID']) }}" class="btn">查看详情</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">没有找到任何团队。</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+<a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary">返回首页</a>
+
+</body>
+</html>
+

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加赛事</title>
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .btn-cancel {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        /* 消息提示样式 */
+        .flash-message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .flash-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .flash-error {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>添加赛事</h1>
+
+    <!-- 显示成功或错误消息 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {% if category == 'error' %}flash-error{% else %}flash-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- 赛事表单 -->
+    <form method="POST">
+        <!-- 比赛ID -->
+        <div class="form-section">
+            <label for="MatchID">比赛ID:</label>
+            <input type="text" id="MatchID" name="MatchID" required>
+        </div>
+
+        <!-- 比赛时间 -->
+        <div class="form-section">
+            <label for="MatchTime">比赛时间:</label>
+            <input type="datetime-local" id="MatchTime" name="MatchTime" required>
+        </div>
+
+        <!-- 比赛地点 -->
+        <div class="form-section">
+            <label for="Location">比赛地点:</label>
+            <input type="text" id="Location" name="Location" required>
+        </div>
+
+        <!-- 第一支球队 -->
+        <div class="form-section">
+            <h3>第一支球队（主队）</h3>
+            <label for="team1_id">TeamID:</label>
+            <input type="text" id="team1_id" name="team1_id" required>
+
+            <label for="team1_name">TeamName:</label>
+            <input type="text" id="team1_name" name="team1_name" required>
+
+            <label for="team1_members">队员（多个队员以逗号分隔）：</label>
+            <input type="text" id="team1_members" name="team1_members" required>
+        </div>
+
+        <!-- 第二支球队 -->
+        <div class="form-section">
+            <h3>第二支球队（客队）</h3>
+            <label for="team2_id">TeamID:</label>
+            <input type="text" id="team2_id" name="team2_id" required>
+
+            <label for="team2_name">TeamName:</label>
+            <input type="text" id="team2_name" name="team2_name" required>
+
+            <label for="team2_members">队员（多个队员以逗号分隔）：</label>
+            <input type="text" id="team2_members" name="team2_members" required>
+        </div>
+
+        <!-- 比分 -->
+        <div class="form-section">
+            <label for="home_score">主队得分:</label>
+            <input type="number" id="home_score" name="home_score" required>
+
+            <label for="away_score">客队得分:</label>
+            <input type="number" id="away_score" name="away_score" required>
+        </div>
+
+        <!-- 胜者 -->
+        <div class="form-section">
+            <label for="winner">胜者:</label>
+            <select id="winner" name="winner" required>
+                <option value="Home">主队</option>
+                <option value="Away">客队</option>
+            </select>
+        </div>
+
+        <!-- 亮点 -->
+        <div class="form-section">
+            <label for="highlight_video_url">视频亮点 URL:</label>
+            <input type="url" id="highlight_video_url" name="highlight_video_url">
+
+            <label for="highlight_image_url">图片亮点 URL:</label>
+            <input type="url" id="highlight_image_url" name="highlight_image_url">
+        </div>
+
+        <!-- 关键事件 -->
+        <h3>关键事件</h3>
+
+        <div class="form-section">
+            <label for="home_fouls">主队犯规:</label>
+            <input type="number" id="home_fouls" name="home_fouls" required>
+
+            <label for="away_fouls">客队犯规:</label>
+            <input type="number" id="away_fouls" name="away_fouls" required>
+        </div>
+
+        <div class="form-section">
+            <label for="home_blocks">主队封盖:</label>
+            <input type="number" id="home_blocks" name="home_blocks" required>
+
+            <label for="away_blocks">客队封盖:</label>
+            <input type="number" id="away_blocks" name="away_blocks" required>
+        </div>
+
+        <div class="form-section">
+            <label for="home_rebounds">主队篮板:</label>
+            <input type="number" id="home_rebounds" name="home_rebounds" required>
+
+            <label for="away_rebounds">客队篮板:</label>
+            <input type="number" id="away_rebounds" name="away_rebounds" required>
+        </div>
+
+        <div class="form-section">
+            <label for="home_steals">主队抢断:</label>
+            <input type="number" id="home_steals" name="home_steals" required>
+
+            <label for="away_steals">客队抢断:</label>
+            <input type="number" id="away_steals" name="away_steals" required>
+        </div>
+
+        <!-- 提交按钮 -->
+        <button type="submit">添加赛事</button>
+        <a href="{{ url_for('manage_matches') }}" class="btn-cancel">取消</a>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛事管理</title>
+    <style>
+        /* 样式化表格和按钮 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .btn {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        /* 添加按钮样式 */
+        .btn-add {
+            padding: 10px 20px;
+            background-color: #28a745;  /* 绿色 */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;  /* 距离表格一定距离 */
+        }
+        .btn-add:hover {
+            background-color: #218838; /* 悬停效果 */
+        }
+    </style>
+</head>
+<body>
+    <h1>赛事管理</h1>
+
+    <!-- 添加新赛事按钮 -->
+    <a href="{{ url_for('add_match') }}" class="btn-add">添加新赛事</a>
+
+    <!-- 查询赛事 -->
+    <form method="POST" action="/find_match">
+        <label for="match_id">输入 MatchID 查询赛事:</label>
+        <input type="text" id="match_id" name="match_id" required>
+        <button type="submit">查询赛事</button>
+    </form>
+
+    <h2>所有赛事</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>MatchID</th>
+                <th>比赛时间</th>
+                <th>比赛地点</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in matches %}
+            <tr>
+                <td><a href="{{ url_for('match_detail', match_id=match['MatchID']) }}">{{ match['MatchID'] }}</a></td>
+                <td>{{ match['MatchTime'] }}</td>
+                <td>{{ match['Location'] }}</td>
+                <td>
+                    <a href="{{ url_for('match_detail', match_id=match['MatchID']) }}" class="btn">查看详情</a>
+                    <form action="{{ url_for('delete_match', match_id=match['MatchID']) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">删除赛事</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary">返回首页</a>
+
+</body>
+</html>

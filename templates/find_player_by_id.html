@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询球员</title>
+</head>
+<body>
+    <h1>查询球员</h1>
+
+    <form method="POST" action="/find_player">
+        <label for="player_id">输入 PlayerID 查询球员:</label>
+        <input type="text" id="player_id" name="player_id" required>
+        <button type="submit">查询</button>
+    </form>
+
+    {% if error %}
+    <div style="color: red;">{{ error }}</div>
+    {% endif %}
+
+    {% if player %}
+    <h2>查询结果:</h2>
+    <p><strong>PlayerID:</strong> {{ player['PlayerID'] }}</p>
+    <p><strong>Name:</strong> {{ player['Name'] }}</p>
+    <p><strong>TeamID:</strong> {{ player['TeamID'] }}</p>
+    <p><strong>Number:</strong> {{ player['Number'] }}</p>
+    <p><strong>Position:</strong> {{ player['Position'] }}</p>
+    {% endif %}
+    <!-- 返回按钮 -->
+    <a href="{{ url_for('manage_players') }}" class="btn">返回球员列表</a>
+</body>
+</html>
+

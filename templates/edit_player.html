@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑球员信息</title>
+</head>
+<body>
+    <h1>编辑球员信息</h1>
+
+    <form action="{{url_for('edit_player', player_id=player['PlayerID']) }}" method="POST">
+        <div>
+            <label for="Name"><strong>姓名：</strong></label>
+            <input type="text" id="Name" name="Name" value="{{ player['Name'] }}" required>
+        </div>
+        <div>
+            <label for="TeamID"><strong>队伍：</strong></label>
+            <input type="text" id="TeamID" name="TeamID" value="{{ player['TeamID'] }}" required>
+        </div>
+        <div>
+            <label for="Number"><strong>号码：</strong></label>
+            <input type="text" id="Number" name="Number" value="{{ player['Number'] }}" required>
+        </div>
+        <div>
+            <label for="Position"><strong>位置：</strong></label>
+            <input type="text" id="Position" name="Position" value="{{ player['Position'] }}" required>
+        </div>
+
+        <button type="submit" class="btn">保存更改</button>
+    </form>
+
+    <!-- 返回球员详情页面的按钮 -->
+    <a href="{{ url_for('player_detail', player_id=player['PlayerID']) }}" class="btn">返回</a>
+</body>
+</html>

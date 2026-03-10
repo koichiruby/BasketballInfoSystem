@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询赛事</title>
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .btn-cancel {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .match-details {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .match-details h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .match-details p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>查询赛事</h1>
+
+    <!-- 查询赛事的表单 -->
+    <form method="POST">
+        <label for="match_id">输入赛事 MatchID 查询：</label>
+        <input type="text" id="match_id" name="match_id" required>
+        <button type="submit">查询赛事</button>
+    </form>
+
+    {% if error %}
+        <div style="color: red; text-align: center; margin-top: 20px;">
+            <strong>{{ error }}</strong>
+        </div>
+    {% endif %}
+
+    {% if match %}
+        <!-- 显示查询到的赛事信息 -->
+        <div class="match-details">
+            <h2>赛事详情</h2>
+            <p><strong>MatchID:</strong> {{ match['MatchID'] }}</p>
+            <p><strong>比赛时间:</strong> {{ match['MatchTime'] }}</p>
+            <p><strong>比赛地点:</strong> {{ match['Location'] }}</p>
+
+            <h3>参赛球队</h3>
+            <p><strong>主队:</strong> {{ match['Teams'][0]['Name'] }} (ID: {{ match['Teams'][0]['TeamID'] }})</p>
+            <p><strong>客队:</strong> {{ match['Teams'][1]['Name'] }} (ID: {{ match['Teams'][1]['TeamID'] }})</p>
+
+            <h3>比分</h3>
+            <p><strong>主队得分:</strong> {{ match['Result']['HomeScore'] }}</p>
+            <p><strong>客队得分:</strong> {{ match['Result']['AwayScore'] }}</p>
+            <p><strong>胜者:</strong> {{ match['Result']['Winner'] }}</p>
+
+            <h3>亮点</h3>
+            <p><strong>视频亮点:</strong> <a href="{{ match['Highlights'][0]['URL'] }}" target="_blank">{{ match['Highlights'][0]['URL'] }}</a></p>
+            <p><strong>图片亮点:</strong> <a href="{{ match['Highlights'][1]['URL'] }}" target="_blank">{{ match['Highlights'][1]['URL'] }}</a></p>
+
+            <h3>关键事件</h3>
+            <p><strong>主队犯规:</strong> {{ match['KeyEvents']['Fouls']['HomeTeamFouls'] }}</p>
+            <p><strong>客队犯规:</strong> {{ match['KeyEvents']['Fouls']['AwayTeamFouls'] }}</p>
+            <p><strong>主队封盖:</strong> {{ match['KeyEvents']['Blocks']['HomeTeamBlocks'] }}</p>
+            <p><strong>客队封盖:</strong> {{ match['KeyEvents']['Blocks']['AwayTeamBlocks'] }}</p>
+            <p><strong>主队篮板:</strong> {{ match['KeyEvents']['Rebounds']['HomeTeamRebounds'] }}</p>
+            <p><strong>客队篮板:</strong> {{ match['KeyEvents']['Rebounds']['AwayTeamRebounds'] }}</p>
+            <p><strong>主队抢断:</strong> {{ match['KeyEvents']['Steals']['HomeTeamSteals'] }}</p>
+            <p><strong>客队抢断:</strong> {{ match['KeyEvents']['Steals']['AwayTeamSteals'] }}</p>
+
+            <!-- 返回按钮 -->
+            <a href="{{ url_for('manage_matches') }}" class="btn-cancel">返回赛事管理</a>
+        </div>
+    {% endif %}
+
+</body>
+</html>
